@@ -1,0 +1,38 @@
+name: Build VS Code Extension
+
+on:
+  push:
+    branches:
+      - main  # Replace with your default branch if not 'main'
+  pull_request:
+    branches:
+      - main  # Replace with your default branch if not 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]  # You can specify other versions if needed
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Build
+      run: npm run compile  # Replace with your build command if different
+
+    - name: Archive Production Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: your-extension-name
+        path: ./out  # Replace with the path to your built files, if different
