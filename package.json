@@ -30,6 +30,7 @@
     "languages": [
       {
         "id": "mx3",
+        "configuration": "./language-configuration/language-configuration.json",
         "extensions": [
           ".mx3"
         ],
@@ -43,7 +44,10 @@
       {
         "language": "mx3",
         "scopeName": "source.mx3",
-        "path": "./syntaxes/MX3.tmLanguage.json"
+        "path": "./syntaxes/MX3.tmLanguage.json",
+        "fileTypes": [
+          "mx3"
+        ]
       }
     ],
     "keybindings": [
