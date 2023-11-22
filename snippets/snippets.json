@@ -1,0 +1,39 @@
+{
+    "Sample Script": {
+        "prefix": "sample",
+        "body": [
+            "// The size of each cell",
+            "dx = 2e-9",
+            "dy = 2e-9",
+            "dz = 5e-9",
+            "",
+            "// We set the total size of our system",
+            "Tx = 1000e-09",
+            "Ty = 200e-09",
+            "Tz = 5e-09",
+            "",
+            "// universe() selects all the cells",
+            "// sub() will substract a shape from the selection",
+            "setgeom(universe().Sub(Circle(100e-09)))",
+            "",
+            "// material parameters",
+            "Msat = 800e03 // Saturation magnetization",
+            "Aex = 13e-12 // Exchange interaction aka stiffness constant",
+            "Ku1 = 50e3 // First order uniaxial anisotropy constant",
+            "anisU = vector(0,1,0) // Uniaxial anisotropy axis",
+            "alpha = 0.001 // Damping",
+            "",
+            "// If you don't put this line, the magnetization will be random",
+            "m = uniform(0.1, 0.9, 0.1) // (mx,my,mz)",
+            "snapshotas(geom,\"m_uniform.png\")",
+            "saveas(m,\"m_uniform\")",
+            "",
+            "// Runs the LLG equation until an energy minimum is found",
+            "relax()",
+            "",
+            "// Run for 0.1 ns",
+            "run(1e-10)"
+        ],
+        "description": "Sample Script"
+    }
+}
