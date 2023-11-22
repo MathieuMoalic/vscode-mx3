@@ -22,8 +22,23 @@
       "properties": {
         "mx3.path": {
           "type": "string",
-          "default": "mumax3",
+          "default": "amumax",
           "description": "Path to mumax3/amumax executable"
+        },
+        "mx3.webInterfaceUrl": {
+          "type": "string",
+          "default": "http://localhost:35367",
+          "description": "The URL of the MX3 web interface"
+        },
+        "mx3.openWebUI": {
+          "type": "boolean",
+          "default": true,
+          "description": "Control whether to open the MX3 web interface automatically"
+        },
+        "mx3.clearOutput": {
+          "type": "boolean",
+          "default": true,
+          "description": "Control whether to clear the output of previous simulations when running a new simulation"
         }
       }
     },
@@ -53,41 +68,64 @@
     "keybindings": [
       {
         "key": "ctrl+alt+r",
-        "command": "extension.runmumax3",
+        "command": "extension.runSimulation",
         "when": "resourceExtname == .mx3 && editorTextFocus"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "when": "resourceExtname == .mx3",
-          "command": "extension.runmumax3",
-          "group": "navigation"
+          "command": "extension.runSimulation",
+          "group": "navigation",
+          "when": "!isRunning && resourceExtname == .mx3"
+        },
+        {
+          "command": "extension.stopSimulation",
+          "group": "navigation",
+          "when": "isRunning"
         }
       ],
       "editor/context": [
         {
           "when": "resourceExtname == .mx3",
-          "command": "extension.runmumax3",
+          "command": "extension.runSimulation",
           "group": "1_modification"
         }
       ],
       "explorer/context": [
         {
           "when": "resourceExtname == .mx3",
-          "command": "extension.runmumax3",
+          "command": "extension.runSimulation",
           "group": "1_modification"
         }
       ]
     },
     "commands": [
       {
-        "command": "extension.runmumax3",
-        "title": "Run Amumax",
+        "command": "extension.runSimulation",
+        "title": "Run Simulation",
         "icon": {
           "light": "resources/run-file.svg",
           "dark": "resources/run-file.svg"
         }
+      },
+      {
+        "command": "extension.stopSimulation",
+        "title": "Stop Simulation",
+        "icon": {
+          "light": "resources/stop.svg",
+          "dark": "resources/stop.svg"
+        }
+      },
+      {
+        "command": "extension.showWebInterface",
+        "title": "Show Web Interface"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "mx3",
+        "path": "snippets/snippets.json"
       }
     ]
   },
