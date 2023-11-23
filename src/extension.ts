@@ -29,9 +29,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 		if (!binaryPath) {
-			vscode.window.showErrorMessage('Path to mumax3 or amumax is not set. Please configure it in settings.');
+			vscode.window.showErrorMessage(
+				'Path to mumax3 or amumax is not set. Please configure it in settings.',
+				'Open Settings'
+			).then(selected => {
+				if (selected === 'Open Settings') {
+					vscode.commands.executeCommand('workbench.action.openSettings', 'mx3.path');
+				}
+			});
 			return;
 		}
+
 
 		if (shouldCLearOutput) {
 			outputChannel.clear();
