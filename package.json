@@ -23,7 +23,7 @@
         "mx3.path": {
           "type": "string",
           "default": "amumax",
-          "description": "Path to mumax3/amumax executable"
+          "description": "Path to mumax3/amumax executable (We recommend using the full path)"
         },
         "mx3.webInterfaceUrl": {
           "type": "string",
@@ -33,12 +33,12 @@
         "mx3.openWebUI": {
           "type": "boolean",
           "default": true,
-          "description": "Control whether to open the MX3 web interface automatically"
+          "description": "Open the MX3 web interface automatically"
         },
         "mx3.clearOutput": {
           "type": "boolean",
           "default": true,
-          "description": "Control whether to clear the output of previous simulations when running a new simulation"
+          "description": "Clear the output of previous simulations when running a new simulation"
         }
       }
     },
