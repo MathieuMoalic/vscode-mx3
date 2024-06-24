@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Get previous package.json
         run: git show origin/main:package.json > package.json.old
 
@@ -25,17 +26,21 @@ jobs:
           echo "old_version=${OLD_VERSION}" >> $GITHUB_ENV
           if [ "$NEW_VERSION" = "$OLD_VERSION" ]; then
             echo "Version has not changed. Exiting."
-            exit 0
+            exit 1
           fi
+
       - run: npm install
+        if: ${{ env.new_version != env.old_version }}
 
       - name: Publish to Open VSX Registry
+        if: ${{ env.new_version != env.old_version }}
         uses: HaaLeo/publish-vscode-extension@v1
         id: publishToOpenVSX
         with:
           pat: ${{ secrets.OPEN_VSX_TOKEN }}
 
       - name: Publish to Visual Studio Marketplace
+        if: ${{ env.new_version != env.old_version }}
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VSCE_TOKEN }}
