@@ -24,10 +24,6 @@ jobs:
           OLD_VERSION=$(jq -r '.version' package.json.old)
           echo "new_version=${NEW_VERSION}" >> $GITHUB_ENV
           echo "old_version=${OLD_VERSION}" >> $GITHUB_ENV
-          if [ "$NEW_VERSION" = "$OLD_VERSION" ]; then
-            echo "Version has not changed. Exiting."
-            exit 1
-          fi
 
       - run: npm install
         if: ${{ env.new_version != env.old_version }}
