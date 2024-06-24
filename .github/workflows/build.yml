@@ -9,7 +9,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Get previous package.json
+        run: git show origin/main:package.json > package.json.old
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Check version change
+        id: version_check
+        run: |
+          NEW_VERSION=$(jq -r '.version' package.json)
+          OLD_VERSION=$(jq -r '.version' package.json.old)
+          echo "new_version=${NEW_VERSION}" >> $GITHUB_ENV
+          echo "old_version=${OLD_VERSION}" >> $GITHUB_ENV
+          if [ "$NEW_VERSION" = "$OLD_VERSION" ]; then
+            echo "Version has not changed. Exiting."
+            exit 0
+          fi
       - run: npm install
 
       - uses: lannonbr/vsce-action@3.0.0
